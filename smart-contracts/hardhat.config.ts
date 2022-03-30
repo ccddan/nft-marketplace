@@ -27,7 +27,11 @@ const ACCOUNTS = process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KE
 
 const config: HardhatUserConfig = {
   solidity: "0.8.4",
+  defaultNetwork: "hardhat",
   networks: {
+    "hardhat": {
+      chainId: 1337,
+    },
     "ethereum-rinkeby": {
       url: process.env.ETHEREUM_RINKEBY_URL || "",
       accounts: ACCOUNTS,
