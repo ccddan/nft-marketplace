@@ -23,13 +23,26 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
+const ACCOUNTS = process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [];
+
 const config: HardhatUserConfig = {
   solidity: "0.8.4",
   networks: {
-    ropsten: {
-      url: process.env.ROPSTEN_URL || "",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    "ethereum-rinkeby": {
+      url: process.env.ETHEREUM_RINKEBY_URL || "",
+      accounts: ACCOUNTS,
+    },
+    "ethereum-ropsten": {
+      url: process.env.ETHEREUM_ROPSTEN_URL || "",
+      accounts: ACCOUNTS,
+    },
+    "polygon": {
+      url: process.env.POLYGON_URL || "",
+      accounts: ACCOUNTS,
+    },
+    "polygon-testnet": {
+      url: process.env.POLYGON_MUMBAI_URL || "",
+      accounts: ACCOUNTS,
     },
   },
   gasReporter: {
@@ -37,7 +50,17 @@ const config: HardhatUserConfig = {
     currency: "USD",
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    apiKey: {
+      // For supported networks, see: https://hardhat.org/plugins/nomiclabs-hardhat-etherscan.html
+
+      // ethereum
+      rinkeby: process.env.ETHERSCAN_RINKEBY_API_KEY,
+      ropsten: process.env.ETHERSCAN_ROPSTEN_API_KEY,
+
+      // polygon
+      polygon: process.env.POLYGON_ETHERSCAN_API_KEY,
+      polygonMumbai: process.env.POLYGON_MUMBAI_ETHERSCAN_API_KEY,
+    },
   },
 };
 
