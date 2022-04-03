@@ -29,8 +29,11 @@ const config: HardhatUserConfig = {
   solidity: "0.8.4",
   defaultNetwork: "hardhat",
   networks: {
-    "hardhat": {
+    hardhat: {
       chainId: 1337,
+      gas: "auto",
+      gasPrice: "auto",
+      blockGasLimit: 30_000_000,
     },
     "ethereum-rinkeby": {
       url: process.env.ETHEREUM_RINKEBY_URL || "",
