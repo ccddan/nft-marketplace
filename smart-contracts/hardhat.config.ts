@@ -23,7 +23,8 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
-const ACCOUNTS = process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [];
+const ACCOUNTS =
+  process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [];
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -51,7 +52,7 @@ const config: HardhatUserConfig = {
       url: process.env.ETHEREUM_ROPSTEN_URL || "",
       accounts: ACCOUNTS,
     },
-    "polygon": {
+    polygon: {
       url: process.env.POLYGON_URL || "",
       accounts: ACCOUNTS,
     },
