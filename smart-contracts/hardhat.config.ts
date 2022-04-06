@@ -38,7 +38,7 @@ const config: HardhatUserConfig = {
   },
   defaultNetwork: "hardhat",
   networks: {
-    hardhat: {
+    localhost: {
       chainId: 1337,
       gas: "auto",
       gasPrice: "auto",
