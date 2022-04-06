@@ -55,6 +55,8 @@ $ npx hardhat node
 
 Select any `Private Key` shown in the console's output and update `.env` (see [Environment Variables](#EnvironmentVariables))
 
+> **OPTIONAL**: Instead of using hardhat's local node, you could use [Ganache](https://trufflesuite.com/ganache/index.html) if you want to have access to transactions logs and history.
+
 **Deploy contracts**
 
 ```bash
