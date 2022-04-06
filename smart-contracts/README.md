@@ -1,10 +1,109 @@
-# Advanced Sample Hardhat Project
+# NFT Marketplace - Smart Contracts
 
-This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
+<!-- vscode-markdown-toc -->
 
-The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, pre-configured to work with the project code.
+- 1. [Setup](#Setup)
+  - 1.1. [Dependencies](#Dependencies)
+  - 1.2. [Environment Variables](#EnvironmentVariables)
+- 2. [Contracts Deployment](#ContractsDeployment)
+  - 2.1. [Lint, Compile and Test Contracts](#LintCompileandTestContracts)
+  - 2.2. [Local Network Deployment](#LocalNetworkDeployment)
+  - 2.3. [Remote Network Deployment](#RemoteNetworkDeployment)
+  - 2.4. [(Optional) Verify Contracts](#OptionalVerifyContracts)
+- 3. [General Useful Commands](#GeneralUsefulCommands)
 
-Try running some of the following tasks:
+<!-- vscode-markdown-toc-config
+	numbering=true
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
+
+## 1. <a name='Setup'></a>Setup
+
+### 1.1. <a name='Dependencies'></a>Dependencies
+
+```bash
+$ npm install
+```
+
+### 1.2. <a name='EnvironmentVariables'></a>Environment Variables
+
+For local development environments, create a copy of `.env.example` and rename it as `.env`. Next, inside `.env` provide the correct values for each env var (as applicable).
+
+For production environments, depending on your infrastructure, provide the expected env vars defined in `.env.example` and their corresponding values.
+
+## 2. <a name='ContractsDeployment'></a>Contracts Deployment
+
+### 2.1. <a name='LintCompileandTestContracts'></a>Lint, Compile and Test Contracts
+
+```bash
+$ npx solhint 'contracts/**/*.sol'
+$ npx hardhat clean
+$ npx hardhat compile
+$ REPORT_GAS=true npx hardhat test
+```
+
+### 2.2. <a name='LocalNetworkDeployment'></a>Local Network Deployment
+
+**Start Local RPC Server**
+
+In a separate window terminal, run:
+
+```bash
+$ npx hardhat node
+```
+
+Select any `Private Key` shown in the console's output and update `.env` (see [Environment Variables](#EnvironmentVariables))
+
+**Deploy contracts**
+
+```bash
+$ npx hardhat run scripts/deploy.ts --network localhost
+```
+
+### 2.3. <a name='RemoteNetworkDeployment'></a>Remote Network Deployment
+
+Depending on the network you are deploying to, you have to provide the URL of the RPC server and optionally, the key for etherscan. Supported networks are:
+
+- Ethereum Rinkeby
+
+  **network name**: ethereum-rinkeby
+
+- Ethereum Ropsten
+
+  **network name**: ethereum-ropsten
+
+- Polygon Mainnet
+
+  **network name**: polygon
+
+- Polygon Testnet (Mumbai)
+
+  **network name**: polygon-testnet
+
+You can use any RPC provider, public, private (paid services such as Alchemy or Infura) or even your own.
+
+Once you have the RPC server url and the etherscan key (optional), update the corresponding env vars in `.env` (see [Environment Variables](#EnvironmentVariables)).
+
+**Deploy contracts**
+
+```bash
+$ npx hardhat run scripts/deploy.ts --network <target-network>
+```
+
+### 2.4. <a name='OptionalVerifyContracts'></a>(Optional) Verify Contracts
+
+> **IMPORTANT:** _\*\_ETHERSCAN_API_KEY_ env var is required for this step.
+
+To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan (Rinkeby, Ropsten, Polygon are supported networks).
+
+Copy the deployment address of your contract and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
+
+```shell
+npx hardhat verify --network <contract-network> DEPLOYED_CONTRACT_ADDRESS
+```
+
+## 3. <a name='GeneralUsefulCommands'></a>General Useful Commands
 
 ```shell
 npx hardhat accounts
@@ -24,23 +123,3 @@ npx prettier '**/*.{json,sol,md}' --write
 npx solhint 'contracts/**/*.sol'
 npx solhint 'contracts/**/*.sol' --fix
 ```
-
-# Etherscan verification
-
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
-
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
-
-```shell
-hardhat run --network ropsten scripts/deploy.ts
-```
-
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
-
-```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
-```
-
-# Performance optimizations
-
-For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
