@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 import "hardhat/console.sol";
 
-contract NFTMarketplace is ERC721URIStorage {
+contract NFTMarket is ERC721URIStorage {
     using Counters for Counters.Counter;
 
     /// @notice internal counter to keep track of all created tokens in marketplace (sold and non-sold items)
