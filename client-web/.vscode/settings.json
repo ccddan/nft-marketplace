@@ -3,6 +3,7 @@
         "tailwind",
         "ipfs",
         "nomiclabs",
-        "tailwindcss"
+        "tailwindcss",
+        "walletconnect"
     ]
 }
