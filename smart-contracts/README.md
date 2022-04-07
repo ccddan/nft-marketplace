@@ -8,6 +8,8 @@
 - 2. [Contracts Deployment](#ContractsDeployment)
   - 2.1. [Lint, Compile and Test Contracts](#LintCompileandTestContracts)
   - 2.2. [Local Network Deployment](#LocalNetworkDeployment)
+    - 2.2.1. [Hardhat](#Hardhat)
+    - 2.2.2. [Ganache](#Ganache)
   - 2.3. [Remote Network Deployment](#RemoteNetworkDeployment)
   - 2.4. [(Optional) Verify Contracts](#OptionalVerifyContracts)
 - 3. [General Useful Commands](#GeneralUsefulCommands)
@@ -45,7 +47,17 @@ $ REPORT_GAS=true npx hardhat test
 
 ### 2.2. <a name='LocalNetworkDeployment'></a>Local Network Deployment
 
-**Start Local RPC Server**
+Supported networks are:
+
+- Hardhat RPC Server
+
+  **network name**: localhost
+
+- Ganache RPC Server
+
+  **network name**: ganache
+
+#### 2.2.1. <a name='Hardhat'></a>Hardhat
 
 In a separate window terminal, run:
 
@@ -55,12 +67,14 @@ $ npx hardhat node
 
 Select any `Private Key` shown in the console's output and update `.env` (see [Environment Variables](#EnvironmentVariables))
 
-> **OPTIONAL**: Instead of using hardhat's local node, you could use [Ganache](https://trufflesuite.com/ganache/index.html) if you want to have access to transactions logs and history.
+#### 2.2.2. <a name='Ganache'></a>Ganache
+
+Visit [Ganache](https://trufflesuite.com/ganache/index.html) website for instruction on how to install and configure Ganache. Expected `chainId` can be found in `.env.example` file. Once you have your RPC server URL and the private key for the account you're going to use to deploy the contracts, update the corresponding env vars (see [Environment Variables](#EnvironmentVariables)).
 
 **Deploy contracts**
 
 ```bash
-$ npx hardhat run scripts/deploy.ts --network localhost
+$ npx hardhat run scripts/deploy.ts --network {localhost or ganache}
 ```
 
 ### 2.3. <a name='RemoteNetworkDeployment'></a>Remote Network Deployment

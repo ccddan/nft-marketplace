@@ -36,13 +36,17 @@ const config: HardhatUserConfig = {
       },
     },
   },
-  defaultNetwork: "hardhat",
+  defaultNetwork: "localhost",
   networks: {
     localhost: {
-      chainId: 1337,
+      chainId: 31337,
       gas: "auto",
       gasPrice: "auto",
       blockGasLimit: 30_000_000,
+    },
+    ganache: {
+      url: process.env.ETHEREUM_GANACHE_URL,
+      chainId: 1337,
     },
     "ethereum-rinkeby": {
       url: process.env.ETHEREUM_RINKEBY_URL || "",
