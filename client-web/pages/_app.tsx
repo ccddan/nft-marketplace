@@ -2,11 +2,12 @@ import "../styles/globals.css";
 
 import type { AppProps } from "next/app";
 import Link from "next/link";
+import { getProvider } from "../src/provider";
 
 export const App = ({ Component, pageProps }: AppProps) => {
   const connectBtnOnClickHandler = async () => {
     console.log("connecting...");
-function MyApp({ Component, pageProps }: AppProps) {
+    const provider = await getProvider();
     console.log("connected!!");
   };
 
