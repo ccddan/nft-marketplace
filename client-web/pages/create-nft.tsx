@@ -24,6 +24,11 @@ export default function CreateItem() {
 
   async function onChange(e: any) {
     /* upload image to IPFS */
+    if (!e.target.files.length) {
+      console.log("No image selected");
+      return;
+    }
+
     const file = e.target.files[0];
     try {
       const added = await client.add(file, {
