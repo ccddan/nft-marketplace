@@ -30,6 +30,13 @@ export default function CreateItem() {
     }
 
     const file = e.target.files[0];
+    console.log("File:", file);
+
+    if (!SUPPORTED_IMAGE_TYPES.includes(file.type)) {
+      throw new Error(
+        `Image type not supported, supported types are: ${SUPPORTED_IMAGE_TYPES}`
+      );
+    }
     try {
       const added = await client.add(file, {
         progress: (prog) => console.log(`received: ${prog}`),
