@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import Link from "next/link";
 import NFTMarketplaceInfo from "../../smart-contracts/artifacts/contracts/NFTMarket.sol/NFTMarket.info.json";
 import NFTMarketplaceSpecs from "../../smart-contracts/artifacts/contracts/NFTMarket.sol/NFTMarket.json";
 import type { NextPage } from "next";
@@ -76,26 +77,28 @@ export const Home: NextPage = () => {
               You can create and sell your own NFTs!
             </p>
 
-            <a
-              href=""
-              className="inline-flex items-center px-5 py-3 mt-8 font-medium text-white bg-pink-500 hover:bg-pink-700 rounded-lg"
-            >
-              Create NFTs
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="flex-shrink-0 w-4 h-4 ml-3"
+            <Link href="/create-nft">
+              <a
+                href="#"
+                className="inline-flex items-center px-5 py-3 mt-8 font-medium text-white bg-pink-500 hover:bg-pink-700 rounded-lg"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
-            </a>
+                Create NFTs
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="flex-shrink-0 w-4 h-4 ml-3"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+              </a>
+            </Link>
           </div>
         ) : (
           <>
