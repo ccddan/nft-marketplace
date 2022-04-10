@@ -108,7 +108,10 @@ export const Home: NextPage = () => {
 
             <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-2 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4">
               {nfts.map((nft) => (
-                <div key={nft.tokenId} className="relative border-4 p-3">
+                <div
+                  key={nft.tokenId}
+                  className="relative border p-3 hover:shadow-lg hover:shadow-pink-300/50"
+                >
                   <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden lg:h-80 lg:aspect-none">
                     <a href={nft.image}>
                       <img
