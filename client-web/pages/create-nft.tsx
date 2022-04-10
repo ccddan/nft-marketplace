@@ -7,6 +7,7 @@ import { create as ipfsHttpClient } from "ipfs-http-client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
+const SUPPORTED_IMAGE_TYPES = "image/x-png,image/gif,image/jpeg";
 const client = ipfsHttpClient({ url: config.ipfs.url.api });
 
 console.info("ipfs url:", config.ipfs.url.ipfs);
@@ -203,7 +204,7 @@ export default function CreateItem() {
                             name="file-upload"
                             type="file"
                             className="sr-only"
-                            accept="image/x-png,image/gif,image/jpeg"
+                            accept={SUPPORTED_IMAGE_TYPES}
                             onChange={onChange}
                           />
                         </label>
