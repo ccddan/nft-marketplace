@@ -48,7 +48,9 @@ export default function CreatorDashboard() {
       <div className="max-w-2xl mx-auto px-4 py-10 sm:py-15 sm:px-6 lg:max-w-7xl lg:px-8">
         {loadingState === "loaded" && !nfts.length ? (
           <div className="relative p-8 text-center border border-gray-200 rounded-lg">
-            <h2 className="text-2xl font-medium">Nothing for sale...</h2>
+            <h2 className="text-2xl font-medium">
+              You do not have any NFT for sale...
+            </h2>
 
             <p className="mt-4 text-sm text-white-500">
               You can create and sell your own NFTs!
