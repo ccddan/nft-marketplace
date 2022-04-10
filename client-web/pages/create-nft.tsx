@@ -37,6 +37,12 @@ export default function CreateItem() {
         `Image type not supported, supported types are: ${SUPPORTED_IMAGE_TYPES}`
       );
     }
+
+    const size = +(file.size / 1024 / 1024).toFixed(4); // MB
+    console.log("Image size (MB):", size);
+    if (size > 10) {
+      throw new Error("Image size must be lower or equal to 10 MB");
+    }
     try {
       const added = await client.add(file, {
         progress: (prog) => console.log(`received: ${prog}`),
