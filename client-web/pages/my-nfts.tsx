@@ -46,7 +46,9 @@ export default function MyAssets() {
     setLoadingState("loaded");
   }
   function listNFT(nft: any) {
-    router.push(`/resell-nft?id=${nft.tokenId}&tokenURI=${nft.tokenURI}`);
+    router.push(
+      `/resell-nft?id=${nft.tokenId}&tokenURI=${nft.tokenURI}&boughtPrice=${nft.price}`
+    );
   }
   return (
     <div className="bg-white">
