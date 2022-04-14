@@ -1,10 +1,23 @@
 import "../styles/globals.css";
 
+import { NextRouter, useRouter } from "next/router";
+
 import type { AppProps } from "next/app";
 import Link from "next/link";
 import { getProvider } from "../src/provider";
 
+const getNavbarItemStyles = (
+  router: NextRouter,
+  expectedRoute: string = "/"
+): string => {
+  console.log("current route path:", router.pathname);
+  return `mr-4 text-pink-500 ${
+    router.pathname === expectedRoute ? "font-black" : ""
+  }`;
+};
+
 export const App = ({ Component, pageProps }: AppProps) => {
+  const router = useRouter();
   const connectBtnOnClickHandler = async () => {
     console.log("connecting...");
     const provider = await getProvider();
@@ -26,16 +39,20 @@ export const App = ({ Component, pageProps }: AppProps) => {
         </div>
         <div className="flex basis-3/6 items-center justify-center text-xl lg:w-0 xs:display-none">
           <Link href="/">
-            <a className="mr-4 text-pink-500">Home</a>
+            <a className={getNavbarItemStyles(router)}>Home</a>
           </Link>
           <Link href="/create-nft">
-            <a className="mr-6 text-pink-500">Sell NFT</a>
+            <a className={getNavbarItemStyles(router, "/create-nft")}>
+              Sell NFT
+            </a>
           </Link>
           <Link href="/my-nfts">
-            <a className="mr-6 text-pink-500">My NFTs</a>
+            <a className={getNavbarItemStyles(router, "/my-nfts")}>My NFTs</a>
           </Link>
           <Link href="/dashboard">
-            <a className="mr-6 text-pink-500">Dashboard</a>
+            <a className={getNavbarItemStyles(router, "/dashboard")}>
+              Dashboard
+            </a>
           </Link>
         </div>
         <div className="flex grow-0 basis-1/6 items-end justify-end lg:w-0">
