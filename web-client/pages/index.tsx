@@ -16,11 +16,11 @@ export const Home: NextPage = () => {
   }, []);
   async function loadNFTs() {
     /* create a generic provider and query for unsold market items */
-    const provider = await getProvider();
+    const { signer } = await getProvider();
     const contract = new ethers.Contract(
       NFTMarketplaceInfo.addr,
       NFTMarketplaceSpecs.abi,
-      provider
+      signer
     );
     const data = await contract.fetchMarketItems();
 
@@ -49,8 +49,7 @@ export const Home: NextPage = () => {
     setLoadingState("loaded");
   }
   async function buyNft(nft: any) {
-    const provider = await getProvider();
-    const signer = provider.getSigner();
+    const { signer } = await getProvider();
     const contract = new ethers.Contract(
       NFTMarketplaceInfo.addr,
       NFTMarketplaceSpecs.abi,

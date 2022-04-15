@@ -16,8 +16,7 @@ export default function MyAssets() {
     loadNFTs();
   }, []);
   async function loadNFTs() {
-    const provider = await getProvider();
-    const signer = provider.getSigner();
+    const { signer } = await getProvider();
 
     const marketplaceContract = new ethers.Contract(
       NFTMarketplaceInfo.addr,

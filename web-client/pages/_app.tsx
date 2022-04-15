@@ -10,7 +10,6 @@ const getNavbarItemStyles = (
   router: NextRouter,
   expectedRoute: string = "/"
 ): string => {
-  console.log("current route path:", router.pathname);
   return `mr-4 text-pink-500 ${
     router.pathname === expectedRoute ? "font-black" : ""
   }`;
@@ -20,8 +19,12 @@ export const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
   const connectBtnOnClickHandler = async () => {
     console.log("connecting...");
-    const provider = await getProvider();
-    console.log("connected!!");
+    const { library } = await getProvider();
+
+    const accounts = await library.listAccounts();
+    console.log("listAccounts:", accounts);
+    console.log("getNetwork:", await library.getNetwork());
+    console.log("getBalance:", await library.getBalance(accounts[0]));
   };
 
   return (

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import NFTMarketplaceInfo from "../../smart-contracts/artifacts/contracts/NFTMarket.sol/NFTMarket.info.json";
 import NFTMarketplaceSpec from "../../smart-contracts/artifacts/contracts/NFTMarket.sol/NFTMarket.json";
-import Web3Modal from "web3modal";
 import axios from "axios";
 import { ethers } from "ethers";
 import { getProvider } from "../src/provider";
@@ -26,8 +25,7 @@ export default function ResellNFT() {
 
   async function listNFTForSale() {
     if (!price) return;
-    const web3Provider = await getProvider();
-    const signer = web3Provider.getSigner();
+    const { signer } = await getProvider();
 
     const priceFormatted = ethers.utils.parseUnits(formInput.price, "ether");
     let contract = new ethers.Contract(

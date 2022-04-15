@@ -75,8 +75,7 @@ export default function CreateItem() {
 
   async function listNFTForSale() {
     const url = await uploadToIPFS();
-    const provider = await getProvider();
-    const signer = provider.getSigner();
+    const { signer } = await getProvider();
 
     /* create the NFT */
     console.log("Create contract instance");
