@@ -5,19 +5,20 @@ import NFTMarketplaceInfo from "../../smart-contracts/artifacts/contracts/NFTMar
 import NFTMarketplaceSpec from "../../smart-contracts/artifacts/contracts/NFTMarket.sol/NFTMarket.json";
 import axios from "axios";
 import { ethers } from "ethers";
-import { getProvider } from "../src/provider";
+import { useAppContext } from "../src/AppContext";
 import { useRouter } from "next/router";
 
 export default function MyAssets() {
+  const { signer } = useAppContext();
+
   const [nfts, setNfts] = useState<any[]>([]);
   const [loadingState, setLoadingState] = useState("not-loaded");
   const router = useRouter();
   useEffect(() => {
-    loadNFTs();
-  }, []);
-  async function loadNFTs() {
-    const { signer } = await getProvider();
+    if (signer) loadNFTs();
+  }, [signer]);
 
+  async function loadNFTs() {
     const marketplaceContract = new ethers.Contract(
       NFTMarketplaceInfo.addr,
       NFTMarketplaceSpec.abi,

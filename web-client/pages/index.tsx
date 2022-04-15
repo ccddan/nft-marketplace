@@ -6,17 +6,18 @@ import NFTMarketplaceSpecs from "../../smart-contracts/artifacts/contracts/NFTMa
 import type { NextPage } from "next";
 import axios from "axios";
 import { ethers } from "ethers";
-import { getProvider } from "../src/provider";
+import { useAppContext } from "../src/AppContext";
 
 export const Home: NextPage = () => {
+  const { signer } = useAppContext();
+
   const [nfts, setNfts] = useState<any[]>([]);
   const [loadingState, setLoadingState] = useState("not-loaded");
   useEffect(() => {
-    loadNFTs();
-  }, []);
+    if (signer) loadNFTs();
+  }, [signer]);
+
   async function loadNFTs() {
-    /* create a generic provider and query for unsold market items */
-    const { signer } = await getProvider();
     const contract = new ethers.Contract(
       NFTMarketplaceInfo.addr,
       NFTMarketplaceSpecs.abi,
@@ -49,7 +50,6 @@ export const Home: NextPage = () => {
     setLoadingState("loaded");
   }
   async function buyNft(nft: any) {
-    const { signer } = await getProvider();
     const contract = new ethers.Contract(
       NFTMarketplaceInfo.addr,
       NFTMarketplaceSpecs.abi,

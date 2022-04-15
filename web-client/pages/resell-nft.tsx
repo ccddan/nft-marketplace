@@ -4,10 +4,12 @@ import NFTMarketplaceInfo from "../../smart-contracts/artifacts/contracts/NFTMar
 import NFTMarketplaceSpec from "../../smart-contracts/artifacts/contracts/NFTMarket.sol/NFTMarket.json";
 import axios from "axios";
 import { ethers } from "ethers";
-import { getProvider } from "../src/provider";
+import { useAppContext } from "../src/AppContext";
 import { useRouter } from "next/router";
 
 export default function ResellNFT() {
+  const { signer } = useAppContext();
+
   const [formInput, updateFormInput] = useState({ price: "", image: "" });
   const router = useRouter();
   const { id, tokenURI, boughtPrice } = router.query;
@@ -25,7 +27,6 @@ export default function ResellNFT() {
 
   async function listNFTForSale() {
     if (!price) return;
-    const { signer } = await getProvider();
 
     const priceFormatted = ethers.utils.parseUnits(formInput.price, "ether");
     let contract = new ethers.Contract(

@@ -2,8 +2,8 @@ import NFTMarketplaceInfo from "../../smart-contracts/artifacts/contracts/NFTMar
 import NFTMarketplaceSpec from "../../smart-contracts/artifacts/contracts/NFTMarket.sol/NFTMarket.json";
 import config from "../config";
 import { ethers } from "ethers";
-import { getProvider } from "../src/provider";
 import { create as ipfsHttpClient } from "ipfs-http-client";
+import { useAppContext } from "../src/AppContext";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -14,6 +14,8 @@ console.info("ipfs url:", config.ipfs.url.ipfs);
 console.info("ipfs api url:", config.ipfs.url.api);
 
 export default function CreateItem() {
+  const { signer } = useAppContext();
+
   const [fileUrl, setFileUrl] = useState<string | null>(null);
   const [formInput, updateFormInput] = useState({
     price: "",
@@ -75,7 +77,6 @@ export default function CreateItem() {
 
   async function listNFTForSale() {
     const url = await uploadToIPFS();
-    const { signer } = await getProvider();
 
     /* create the NFT */
     console.log("Create contract instance");
