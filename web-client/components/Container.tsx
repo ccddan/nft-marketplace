@@ -1,5 +1,5 @@
 import type { AppProps } from "next/app";
-import { useAppContext } from "../AppContext";
+import { useAppContext } from "../src/AppContext";
 
 export const Container = ({ Component, pageProps }: AppProps) => {
   const { account } = useAppContext();

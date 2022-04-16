@@ -2,8 +2,8 @@ import "../styles/globals.css";
 
 import type { AppProps } from "next/app";
 import { AppProvider } from "../src/AppContext";
-import Container from "../src/components/Container";
-import Navbar from "../src/components/Navbar";
+import Container from "../components/Container";
+import Navbar from "../components/Navbar";
 
 export const App = (props: AppProps) => {
   return (
