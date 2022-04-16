@@ -45,7 +45,7 @@ export default function CreatorDashboard() {
   }
   return (
     <div className="bg-white">
-      <div className="max-w-2xl mx-auto px-4 py-10 sm:py-15 sm:px-6 lg:max-w-7xl lg:px-8">
+      <div className="max-w-2xl mx-auto px-4 py-2 sm:py-0 sm:px-4 lg:max-w-7xl lg:px-8">
         {loadingState === "loaded" && !nfts.length ? (
           <div className="relative p-8 text-center border border-gray-200 rounded-lg">
             <h2 className="text-2xl font-medium">

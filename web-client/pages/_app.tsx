@@ -8,8 +8,8 @@ import Navbar from "../components/Navbar";
 export const App = (props: AppProps) => {
   return (
     <AppProvider>
+      <Navbar />
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <Navbar />
         <Container {...props} />
       </div>
     </AppProvider>
