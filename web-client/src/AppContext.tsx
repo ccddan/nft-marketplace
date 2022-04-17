@@ -24,6 +24,12 @@ export type AppContextProps = {
   // loaders
   connectingWallet: boolean;
   transactionInProgress: boolean;
+
+  // Errors
+  error: {
+    msg: string | undefined | null;
+    setError: (_: string | undefined | null) => void;
+  };
 };
 
 const AppContextInitialValue: AppContextProps = {
@@ -34,6 +40,10 @@ const AppContextInitialValue: AppContextProps = {
   connectWallet: async () => {},
   connectingWallet: false,
   transactionInProgress: false,
+  error: {
+    msg: null,
+    setError: (_: string | undefined | null) => {},
+  },
 };
 export const AppContext = createContext<AppContextProps>(
   AppContextInitialValue
@@ -77,6 +87,7 @@ export type AppProviderProps = {
   children: ReactNode;
 };
 export const AppProvider = (props: AppProviderProps) => {
+  const [errorMsg, setError] = useState<string | undefined | null>(null);
   const [account, setAccount] = useState(AppContextInitialValue.account);
   const [accountBalance, setAccountBalance] = useState(
     AppContextInitialValue.accountBalance
@@ -107,6 +118,10 @@ export const AppProvider = (props: AppProviderProps) => {
         ),
         connectingWallet,
         transactionInProgress,
+        error: {
+          msg: errorMsg,
+          setError,
+        },
       }}
     >
       {props.children}
