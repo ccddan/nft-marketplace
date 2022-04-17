@@ -81,9 +81,10 @@ const createConnectWalletFn = (
       setAccountBalanceFn(balance);
       setLibraryFn(library);
       setSignerFn(signer);
-    } catch (error) {
+    } catch (ex) {
+      const error: any = ex;
       console.error("Wallet connection failed:", error);
-      setErrorFn(`${error}`);
+      setErrorFn(`${error.message}. Try again.`);
     }
     setLoaderFn(false);
   };
