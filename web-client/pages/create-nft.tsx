@@ -56,9 +56,10 @@ export default function CreateItem() {
       console.log("Error uploading file: ", error);
     }
   }
+
   async function uploadToIPFS() {
     const { name, description, price } = formInput;
-    if (!name || !description || !price || !fileUrl) return;
+    if (!name || !price || !fileUrl) return;
     /* first, upload metadata to IPFS */
     const data = JSON.stringify({
       name,
