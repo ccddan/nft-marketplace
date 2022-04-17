@@ -99,7 +99,7 @@ export default function ResellNFT() {
                 <button
                   onClick={listNFTForSale}
                   className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg hover:bg-pink-700 w-full disabled:hover:bg-pink-500 disabled:opacity-75"
-                  disabled={!price.trim()}
+                  disabled={!(price.trim() && image.trim())}
                 >
                   List For Sale
                 </button>
