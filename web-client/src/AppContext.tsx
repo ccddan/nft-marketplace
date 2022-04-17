@@ -68,17 +68,23 @@ const createConnectWalletFn = (
   setSignerFn: Dispatch<
     SetStateAction<ethers.providers.JsonRpcSigner | undefined>
   >,
-  setLoaderFn: Dispatch<SetStateAction<boolean>>
+  setLoaderFn: Dispatch<SetStateAction<boolean>>,
+  setErrorFn: Dispatch<SetStateAction<string | undefined | null>>
 ) => {
   return async () => {
     setLoaderFn(true);
-    let { library, signer } = await getProvider();
-    const accounts = await library.listAccounts();
-    const balance = await library.getBalance(accounts[0]);
-    setAccountFn(accounts[0]);
-    setAccountBalanceFn(balance);
-    setLibraryFn(library);
-    setSignerFn(signer);
+    try {
+      let { library, signer } = await getProvider();
+      const accounts = await library.listAccounts();
+      const balance = await library.getBalance(accounts[0]);
+      setAccountFn(accounts[0]);
+      setAccountBalanceFn(balance);
+      setLibraryFn(library);
+      setSignerFn(signer);
+    } catch (error) {
+      console.error("Wallet connection failed:", error);
+      setErrorFn(`${error}`);
+    }
     setLoaderFn(false);
   };
 };
@@ -114,7 +120,8 @@ export const AppProvider = (props: AppProviderProps) => {
           setAccountBalance,
           setLibrary,
           setSigner,
-          setConnectingWallet
+          setConnectingWallet,
+          setError
         ),
         connectingWallet,
         transactionInProgress,
