@@ -23,7 +23,8 @@ const getNavbarItemStyles = (
 };
 
 export const Navbar = () => {
-  const { account, connectingWallet, connectWallet } = useAppContext();
+  const { account, connectingWallet, connectWallet, disconnectWallet } =
+    useAppContext();
   const router = useRouter();
 
   const renderWalletButton = (
@@ -46,8 +47,8 @@ export const Navbar = () => {
     if (account && !connectingWallet) {
       return (
         <button
-          onClick={() => {
-            console.log("TODO: disconnect wallet");
+          onClick={async () => {
+            await disconnectWallet();
             if (closeFn) closeFn();
           }}
           className={styles}
@@ -196,8 +197,8 @@ export const Navbar = () => {
                       )}
                       {account && !connectingWallet ? (
                         <button
-                          onClick={() => {
-                            console.log("TODO: disconnect wallet");
+                          onClick={async () => {
+                            await disconnectWallet();
                             props.close();
                           }}
                           className="w-full h-full bg-pink-500 hover:bg-pink-700 shadow-lg shadow-pink-500/50 text-white font-bold py-2 px-4 rounded-b-lg"

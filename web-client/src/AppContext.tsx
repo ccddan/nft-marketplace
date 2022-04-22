@@ -21,6 +21,7 @@ export type AppContextProps = {
 
   // handlers
   connectWallet: () => Promise<any>;
+  disconnectWallet: () => Promise<any>;
 
   // loaders
   connectingWallet: boolean;
@@ -39,6 +40,7 @@ const AppContextInitialValue: AppContextProps = {
   library: undefined,
   signer: undefined,
   connectWallet: async () => {},
+  disconnectWallet: async () => {},
   connectingWallet: false,
   transactionInProgress: false,
   error: {
@@ -93,6 +95,38 @@ const createConnectWalletFn = (
   };
 };
 
+const createDisconnectWalletFn = (
+  setAccountFn: Dispatch<SetStateAction<string>>,
+  setAccountBalanceFn: Dispatch<SetStateAction<ethers.BigNumber>>,
+  setLibraryFn: Dispatch<
+    SetStateAction<ethers.providers.Web3Provider | undefined>
+  >,
+  setSignerFn: Dispatch<
+    SetStateAction<ethers.providers.JsonRpcSigner | undefined>
+  >,
+  setLoaderFn: Dispatch<SetStateAction<boolean>>,
+  setErrorFn: Dispatch<SetStateAction<string | undefined | null>>
+) => {
+  return async () => {
+    setLoaderFn(true);
+    try {
+      console.debug("Clearing out app state...");
+      setAccountFn(AppContextInitialValue.account);
+      setAccountBalanceFn(AppContextInitialValue.accountBalance);
+      setLibraryFn(AppContextInitialValue.library);
+      setSignerFn(AppContextInitialValue.signer);
+      console.debug("Clearing out local storage...");
+      localStorage.clear();
+    } catch (ex) {
+      const error: any = ex;
+      console.error("Wallet disconnection failed:", error);
+      setErrorFn(`${error.message}. Try again.`);
+    }
+    setLoaderFn(false);
+    console.debug("Disconnection wallet done");
+  };
+};
+
 export type AppProviderProps = {
   children: ReactNode;
 };
@@ -143,6 +177,14 @@ export const AppProvider = (props: AppProviderProps) => {
         library,
         signer,
         connectWallet: connectWalletFn,
+        disconnectWallet: createDisconnectWalletFn(
+          setAccount,
+          setAccountBalance,
+          setLibrary,
+          setSigner,
+          setConnectingWallet,
+          setError
+        ),
         connectingWallet,
         transactionInProgress,
         error: {
