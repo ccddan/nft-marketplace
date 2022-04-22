@@ -4,6 +4,7 @@ import {
   SetStateAction,
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
 
@@ -76,11 +77,13 @@ const createConnectWalletFn = (
     try {
       let { library, signer } = await getProvider();
       const accounts = await library.listAccounts();
-      const balance = await library.getBalance(accounts[0]);
-      setAccountFn(accounts[0]);
+      const account = accounts[0];
+      const balance = await library.getBalance(account);
+      setAccountFn(account);
       setAccountBalanceFn(balance);
       setLibraryFn(library);
       setSignerFn(signer);
+      localStorage.setItem("wallet", account);
     } catch (ex) {
       const error: any = ex;
       console.error("Wallet connection failed:", error);
@@ -109,6 +112,29 @@ export const AppProvider = (props: AppProviderProps) => {
     AppContextInitialValue.transactionInProgress
   );
 
+  const connectWalletFn = createConnectWalletFn(
+    setAccount,
+    setAccountBalance,
+    setLibrary,
+    setSigner,
+    setConnectingWallet,
+    setError
+  );
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("wallet");
+    if (loggedInUser) {
+      connectWalletFn().catch((err) =>
+        console.error(
+          "Cannot log in wallet automatically:",
+          loggedInUser,
+          ". ERROR:",
+          err
+        )
+      );
+    }
+  }, []);
+
   return (
     <AppContext.Provider
       value={{
@@ -116,14 +142,7 @@ export const AppProvider = (props: AppProviderProps) => {
         accountBalance,
         library,
         signer,
-        connectWallet: createConnectWalletFn(
-          setAccount,
-          setAccountBalance,
-          setLibrary,
-          setSigner,
-          setConnectingWallet,
-          setError
-        ),
+        connectWallet: connectWalletFn,
         connectingWallet,
         transactionInProgress,
         error: {
